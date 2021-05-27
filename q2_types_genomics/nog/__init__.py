@@ -8,10 +8,17 @@
 
 import importlib
 
-from ._version import get_versions
+from ._format import (
+    EggnogFmt, EggnogDirFmt
+)
 
-__version__ = get_versions()['version']
-del get_versions
+# from ._type import (
+#     NOG
+# )
 
-importlib.import_module('q2_types_genomics.per_sample_data')
-importlib.import_module('q2_types_genomics.nog')
+__all__ = [
+    #'NOG', 
+    'EggnogFmt', 'EggnogDirFmt',
+]
+
+#importlib.import_module('q2_types_genomics.nog._transformer')

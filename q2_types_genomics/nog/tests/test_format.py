@@ -6,12 +6,14 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-import importlib
+import unittest
 
-from ._version import get_versions
+from qiime2.core.exceptions import ValidationError
+from qiime2.plugin.testing import TestPluginBase
 
-__version__ = get_versions()['version']
-del get_versions
+class TestFormats(TestPluginBase):
+    package = 'q2_types_genomics.nog.tests'
 
-importlib.import_module('q2_types_genomics.per_sample_data')
-importlib.import_module('q2_types_genomics.nog')
+
+if __name__ == '__main__':
+    unittest.main()

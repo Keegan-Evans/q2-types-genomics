@@ -6,12 +6,16 @@
 # The full license is in the file LICENSE, distributed with this software.
 # ----------------------------------------------------------------------------
 
-import importlib
+from . import EggnogDirFmt
+from qiime2.plugin import SemanticType
+from q2_types.feature_data import FeatureData
 
-from ._version import get_versions
+from ..plugin_setup import plugin
 
-__version__ = get_versions()['version']
-del get_versions
+NOG = SemanticType('NOG', variant_of=FeatureData.field['type'])
 
-importlib.import_module('q2_types_genomics.per_sample_data')
-importlib.import_module('q2_types_genomics.nog')
+plugin.register_semantic_types(NOG)
+plugin.register_semantic_type_to_format(
+    NOG,
+    artifact_format=EggnogDirFmt
+    )
