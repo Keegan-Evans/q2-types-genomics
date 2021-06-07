@@ -12,12 +12,12 @@ from ._format import (
     EggnogFmt, EggnogDirFmt
 )
 
-# from ._type import (
-#     NOG
-# )
+from ._type import (
+    NOG
+)
 
 __all__ = [
-    #'NOG', 
+    'NOG', 
     'EggnogFmt', 'EggnogDirFmt',
 ]
 
