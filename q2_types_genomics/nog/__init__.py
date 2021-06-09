@@ -16,8 +16,11 @@ from ._type import (
     NOG
 )
 
+from ._util import (
+)
+
 __all__ = [
-    'NOG', 
+    'NOG',
     'EggnogFmt', 'EggnogDirFmt',
 ]
 
