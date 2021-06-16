@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 from qiime2.plugin import ValidationError
 
+=======
+import pandas as pd
+from qiime2.plugin import ValidationError
+
+
+>>>>>>> nog-mod
 def verify_features(features_present: list,
                      required_features: list) -> bool:
 
@@ -56,3 +63,22 @@ def index_of_first_data_line(data, comment_character, commented_labels):
             return i
         else:
             return i + 1
+<<<<<<< HEAD
+=======
+
+def _subset_features(desired_features,
+                     data_to_subset):
+
+    data_features = find_feature_labels(data_to_subset)
+    
+    feature_indexes = _get_feature_index(desired_features,
+                                         data_features)
+    
+def _get_feature_index(desired_features,
+                       all_features):
+    feature_indexes = []
+
+    for i, label in enumerate(all_features, 0):
+        if label in desired_features:
+            feature_indexes.append(i)
+>>>>>>> nog-mod
