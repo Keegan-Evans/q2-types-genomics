@@ -9,8 +9,8 @@
 import importlib
 
 from ._util import (
-  _verify_features,
-  _find_feature_labels,
-  _read_labels,
-  _strip_comment_character,
+  verify_features,
+  find_feature_labels,
+  read_labels,
+  strip_comment_character,
 )
