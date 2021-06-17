@@ -10,7 +10,7 @@
 import os
 import unittest
 
-from .. import EggnogFmt 
+from .. import EggnogFmt
 
 from qiime2.core.exceptions import ValidationError
 from qiime2.plugin.testing import TestPluginBase
@@ -27,7 +27,10 @@ class TestNog(TestPluginBase):
     def test_with_header_wrong_columns(self):
         filename = 'eggnog_annotations_incorrect_headers.tsv'
         filepath = self.get_data_path(filename)
-        egg = EggnogFmt(filepath, mode='r')
+        egg = EggnogFmt()
+        with open(filepath, mode='r') as fh:
+            egg = fh.readlines()
+        print(egg)
         with self.assertRaisesRegex(ValidationError, 'EggnogFmt'):
             egg.validate()
 
