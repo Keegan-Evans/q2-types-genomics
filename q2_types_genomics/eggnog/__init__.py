@@ -10,22 +10,22 @@
 import importlib
 
 from ._format import (
-        EggnogRefBinFileFmt, EggnogRefTextFileFmt, EggnogRefDirFmt,
+        EggnogRefTextFileFmt, 
         EggnogOutputDirFmt, PfamDirFmt, DiamondRefDirFmt, MMseqsDirFmt,
-        ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt
+        ArbitraryHeaderTSVFmt, ArbitraryHeaderTSVDirFmt, BinaryReferenceDBDirFmt, OrthologDirFmt, DiamondIndexFileFmt, DiamondIndexDirFmt
         )
 
 from ._type import (
-        Orthologs, Seed, Eggnog, ReferenceDB, Annotation, NOG, KEGG, OG,
-        EggnogDB,
+        Ortholog, Seed, ReferenceDB, Annotation, NOG, KEGG, OG, Eggnog, Diamond, MMseq2,
         )
 
+
 __all__ = [
-        'EggnogRefBinFileFmt', 'EggnogRefTextFileFmt', 'EggnogRefDirFmt',
+        'EggnogRefDirFmt',
         'EggnogOutputDirFmt', 'Eggnog', 'ReferenceDB', 'PfamDirFmt',
-        'DiamondRefDirFmt',  'MMseqsDirFmt', 'Orthologs', 'Seed', 'ArbitraryHeaderTSVFmt',
-        'ArbitraryHeaderTSVDirFmt', 'EggnogDB', 'KEGG', 'OG', 'DiamondDB', 'MMseq2DB',
-        'NOG',
+        'DiamondRefDirFmt',  'MMseqsDirFmt', 'Ortholog', 'Seed', 'ArbitraryHeaderTSVFmt',
+        'ArbitraryHeaderTSVDirFmt', 'KEGG', 'OG', 'Diamond', 'MMseq2',
+        'NOG', 'BinaryReferenceDBDirFmt', 'OrthologDirFmt',  'DiamondIndexFileFmt', 'DiamondIndexDirFmt',
         ]
 
 importlib.import_module('q2_types_genomics.eggnog._transformer')
@@ -34,4 +34,3 @@ importlib.import_module('q2_types_genomics.eggnog._validator')
      #'BinaryReferenceDBFmt',
     #'BinaryReferenceDBDirFmt',
     #ArbitraryHeaderTSVDirFmt, #BinaryReferenceDBFmt, BinaryReferenceDBDirFmt,
-

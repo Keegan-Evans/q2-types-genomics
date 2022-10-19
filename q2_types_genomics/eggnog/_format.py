@@ -18,17 +18,18 @@ from ..plugin_setup import plugin
 
 import re
 
-class EggnogRefBinFileFmt(model.BinaryFileFormat):
+class DiamondIndexFileFmt(model.BinaryFileFormat):
     def _validate_(self, level):
         pass
 
+
+plugin.register_formats(DiamondIndexFileFmt)
 
 class EggnogRefTextFileFmt(model.TextFileFormat):
     def _validate_(self, level):
         pass
 
 
-plugin.register_formats(EggnogRefBinFileFmt)
 plugin.register_formats(EggnogRefTextFileFmt)
 
 # Below is the definition for a Directory Format to hold all of the refer
@@ -37,6 +38,10 @@ plugin.register_formats(EggnogRefTextFileFmt)
 
 class HmmerDirFmt(model.DirectoryFormat):
     pass
+
+
+plugin.register_formats(HmmerDirFmt)
+
 
 class MMseqsDirFmt(model.DirectoryFormat):
     mmseqs_db=model.File(r"mmseqs.db",
@@ -70,6 +75,9 @@ class MMseqsDirFmt(model.DirectoryFormat):
     mmseqs_h_index=model.File(r"mmseqs.db_h.index",
                               format=EggnogRefBinFileFmt,
                               optional=True)
+
+
+plugin.register_formats(MMseqsDirFmt)
 
 
 class PfamDirFmt(model.DirectoryFormat):
@@ -107,15 +115,13 @@ class PfamDirFmt(model.DirectoryFormat):
                        optional=False)
 
 
-class DiamondRefDirFmt(model.DirectoryFormat):
+plugin.register_formats(PfamDirFmt)
 
-    eggnog_proteins = model.File(r"eggnog_proteins\.dmnd",
-                                 format=EggnogRefBinFileFmt,
-                                 optional=True)
 
-    novel_fams = model.File(r"novel_fams.dmnd",
-                            format=EggnogRefBinFileFmt,
-                            optional=True)
+DiamondIndexDirFmt = model.SingleFileDirectoryFormat('index.dmnd', DiamondIndexFileFmt)
+
+plugin.register_formats(DiamondIndexDirFmt)
+
 
 
 class EggnogRefDirFmt(model.DirectoryFormat):
@@ -132,7 +138,6 @@ class EggnogRefDirFmt(model.DirectoryFormat):
                                  format=EggnogRefBinFileFmt,
                                  optional=True)
 
-
 """
 eggnog.db
 eggnog.taxa.db
@@ -144,10 +149,6 @@ hmmer
 mmseqs
 pfam
 """
-
-
-
-
 
 plugin.register_formats(EggnogRefDirFmt)
 
@@ -212,6 +213,7 @@ plugin.register_formats(ArbitraryHeaderTSVDirFmt)
 
 
 # binary reference
+## I THINK WE CAN REMOVE, each reference database needs own definition given the variety of files which could be in each
 class BinaryReferenceDBFmt(model.BinaryFileFormat):
     """A format to hold reference data, originally created for the diamond
     formatted reference database information needed for Eggnog Mapper"""
@@ -240,3 +242,47 @@ BinaryReferenceDBDirFmt = model.SingleFileDirectoryFormat(
 plugin.register_formats(
     BinaryReferenceDBFmt, BinaryReferenceDBDirFmt
     )
+
+
+#   /Users/keeganevans/Desktop/search_diamond/manual.emapper.genepred.fasta
+#   /Users/keeganevans/Desktop/search_diamond/manual.emapper.genepred.gff
+#   /Users/keeganevans/Desktop/search_diamond/manual.emapper.hits
+#   /Users/keeganevans/Desktop/search_diamond/manual.emapper.seed_orthologs
+class OrthologDirFmt(model.DirectoryFormat):
+    orthologs = model.FileCollection(r'.+\.emapper\.seed_orthologs$',
+                                     format=EggnogRefTextFileFmt,
+                                     optional=True)
+    @orthologs.set_path_maker
+    def orthologs_path_maker(self, sample_id):
+        return r'%s\.seed_ortholog' % sample_id
+
+
+    hits = model.FileCollection(r'.+\.hits$',
+                                format=EggnogRefTextFileFmt,
+                                optional=True)
+
+    @hits.set_path_maker
+    def hits_path_maker(self, sample_id):
+        return r'%s\.hits' % sample_id
+
+    genepred_gff = model.FileCollection(r'.+\.emapper\.genepred\.gff$',
+                                        format=EggnogRefBinFileFmt,
+                                        optional=True)
+    @genepred_gff.set_path_maker
+    def hits_path_maker(self, sample_id):
+        return r'%s\.genepred\.gff' % sample_id
+
+    genepred_fasta = model.FileCollection(r'.+\.emapper\.genepred\.(fa|fasta)$',
+                                          format=EggnogRefTextFileFmt,
+                                          optional=True)
+    @genepred_fasta.set_path_maker
+    def hits_path_maker(self, sample_id):
+        return r'%s\.genepred\.fasta' % sample_id
+
+
+#OrthologDirFmt = model.SingleFileDirectoryFormat(
+#                     'OrthologDirFmt',
+#                     'orthologs.tsv',
+#                     ArbitraryHeaderTSVFmt)
+
+plugin.register_formats(OrthologDirFmt)
