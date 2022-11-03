@@ -7,5 +7,10 @@
 # ----------------------------------------------------------------------------
 
 
-from q2_types_genomics.reference_db._type import ReferenceDB, Diamond, Eggnog, MMseq
-__all__ = ['ReferenceDB', 'Diamond', 'Eggnog', 'MMseq']
+from q2_types_genomics.mmseq._format import (
+        MMseqDatabaseFileFmt, MMseqRefDatabaseDirFmt
+        )
+
+__all__ = [
+        'MMseqDatabaseFileFmt', 'MMseqRefDatabaseDirFmt'
+        ]
